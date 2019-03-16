@@ -1,10 +1,10 @@
 {
-  "name": "protoc-gen-swagger-npm",
-  "version": "0.1.0",
-  "description": "A wrapper around the gRPC swagger definitions generator for Node.js",
+  "name": "protoc-gen-swagger-node",
+  "version": "0.1.1",
+  "description": "A wrapper around the gRPC swagger generator for Node.js",
   "scripts": {
-    "postinstall": "go-npm install",
-    "preuninstall": "go-npm uninstall"
+    "install": "node install",
+    "preuninstall": "node uninstall"
   },
   "repository": {
     "type": "git",
@@ -21,11 +21,18 @@
     "url": "https://github.com/iloginow/protoc-gen-swagger-npm/issues"
   },
   "dependencies": {
-    "go-npm": "^0.1.9"
+    "tar": "^4.4.8"
   },
-  "goBinary": {
-    "name": "protoc-gen-swagger",
-    "path": "./bin",
-    "url": "https://github.com/iloginow/protoc-gen-swagger/releases/download/v{{version}}/protoc-gen-swagger_{{version}}_{{platform}}_{{arch}}.tar.gz"
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "env": {
+      "node": true,
+      "es6": true
+    }
   }
 }
