@@ -5,6 +5,7 @@ const url = require('url');
 const tar = require('tar');
 
 const VERSION = '0.1.0';
+const BIN_NAME = 'protoc-gen-swagger';
 
 // Mapping from Node's `process.arch` to Golang's `$GOARCH`
 const ARCH_MAPPING = {
@@ -21,19 +22,20 @@ const PLATFORM_MAPPING = {
 const arch = ARCH_MAPPING[process.arch];
 const platform = PLATFORM_MAPPING[process.platform];
 
-const binName = (platform === 'windows')
-  ? 'protoc-gen-swagger.exe'
-  : 'protoc-gen-swagger';
+const basePath = `https://github.com/iloginow/${BIN_NAME}/releases/download`;
 
-const basePath = `https://github.com/iloginow/${binName}/releases/download`;
-
-const tarPath = `v${VERSION}/${binName}_${VERSION}_${platform}_${arch}.tar.gz`;
+const tarPath = `v${VERSION}/${BIN_NAME}_${VERSION}_${platform}_${arch}.tar.gz`;
 
 const binDirPath = path.resolve(__dirname, './bin');
-const binFilePath = path.resolve(binDirPath, `./${binName}`);
+let binFilePath = path.resolve(binDirPath, `./${BIN_NAME}`);
 
 const parentBinDirPath = path.resolve(__dirname, '../.bin');
-const parentBinFilePath = path.resolve(parentBinDirPath, `./${binName}`);
+let parentBinFilePath = path.resolve(parentBinDirPath, `./${BIN_NAME}`);
+
+if (platform === 'windows') {
+  binFilePath += '.exe';
+  parentBinFilePath += '.exe';
+}
 
 async function install(res) {
   res.pipe(tar.x({ cwd: binDirPath }));
